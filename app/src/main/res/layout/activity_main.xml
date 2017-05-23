@@ -8,7 +8,23 @@
     tools:context="com.iot.lee_pc.seatplacement.MainActivity">
 
 
-    \
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="55dp"
+        android:layout_height="53dp"
+        android:text="TextView"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:layout_editor_absoluteY="277dp"/>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="55dp"
+        android:layout_height="53dp"
+        android:layout_marginLeft="8dp"
+        android:text="TextView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:layout_editor_absoluteY="203dp"/>
 
     <EditText
         android:id="@+id/totalPerson"
