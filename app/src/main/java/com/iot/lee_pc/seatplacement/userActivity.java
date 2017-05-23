@@ -72,11 +72,29 @@ public class userActivity extends AppCompatActivity
                                   String edit1st_batting, String edit2nd_batting, String edit3rd_batting){
         try{
             db.execSQL(
+//                    "insert into StudentInformation" +
+//                            " (name, preference1, preference2, preference3, batting1, batting2, batting3, SeatPlace)" +
+//                            " values ( '" + editName +"', "+ edit1st_preference +", "+ edit2nd_preference +", "+ edit3rd_preference +
+//                            ", "+ edit1st_batting +", "+ edit2nd_batting +", "+ edit3rd_batting +", 0 );"
                     "insert into StudentInformation" +
                             " (name, preference1, preference2, preference3, batting1, batting2, batting3, SeatPlace)" +
-                            " values ( '" + editName +"', "+ edit1st_preference +", "+ edit2nd_preference +", "+ edit3rd_preference +
-                            ", "+ edit1st_batting +", "+ edit2nd_batting +", "+ edit3rd_batting +", 0 );"
-            );
+                            " values ( 'PARK', 3, 5, 4, 4500, 2000, 3000, 0 );");
+            db.execSQL(
+                    "insert into StudentInformation" +
+                            " (name, preference1, preference2, preference3, batting1, batting2, batting3, SeatPlace)" +
+                            " values ( 'TAE', 2, 3, 4, 4400, 2100, 3200, 0 );");
+            db.execSQL(
+                    "insert into StudentInformation" +
+                            " (name, preference1, preference2, preference3, batting1, batting2, batting3, SeatPlace)" +
+                            " values ( 'HUNG', 1, 3, 6, 4200, 1000, 2000, 0 );");
+            db.execSQL(
+                    "insert into StudentInformation" +
+                            " (name, preference1, preference2, preference3, batting1, batting2, batting3, SeatPlace)" +
+                            " values ( 'KIM', 1, 2, 3, 3500, 2000, 3000, 0 );");
+
+
+
+
             a="0";
         }catch(Exception e)
         {
