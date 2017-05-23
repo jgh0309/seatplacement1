@@ -1,6 +1,7 @@
 package com.iot.lee_pc.seatplacement;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -40,6 +41,29 @@ public class userActivity extends AppCompatActivity
                insertStudentInfo(editName.getText().toString(),edit1st_preference.getText().toString(),edit2nd_preference.getText().toString(),
                        edit3rd_preference.getText().toString(),edit1st_batting.getText().toString(),edit2nd_batting.getText().toString(),edit3rd_batting.getText().toString());
                 Toast.makeText(getApplicationContext(), a , Toast.LENGTH_SHORT).show();
+
+                editName.setText("");
+                edit1st_preference.setText("");
+                edit2nd_preference.setText("");
+                edit3rd_preference.setText("");
+                edit1st_batting.setText("");
+                edit2nd_batting.setText("");
+                edit3rd_batting.setText("");
+
+            }
+        });
+
+        Button button1 = (Button) findViewById(R.id.resultBTN);
+        button1.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(
+                        getApplicationContext(),
+                        resultActivity.class
+                );
+                startActivity(intent);
             }
         });
     }

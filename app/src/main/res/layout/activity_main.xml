@@ -7,9 +7,6 @@
     android:layout_height="match_parent"
     tools:context="com.iot.lee_pc.seatplacement.MainActivity">
 
-
-    \
-
     <EditText
         android:id="@+id/totalPerson"
         android:layout_width="100dp"
