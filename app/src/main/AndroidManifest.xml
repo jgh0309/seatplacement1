@@ -16,6 +16,14 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".userActivity">
+        </activity>
+        <activity android:name=".adminActivity">
+        </activity>
+        <activity android:name=".sub_activity"
+            android:label="자리배치 현황"
+            android:theme="@style/Theme.AppCompat.Dialog">
+        </activity>
     </application>
 
 </manifest>
