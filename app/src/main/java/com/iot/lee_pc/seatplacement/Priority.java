@@ -12,20 +12,16 @@ import android.support.v7.app.AppCompatActivity;
 public class Priority extends AppCompatActivity {
 
     SQLiteDatabase db;
-    
+
     public void Setseatnumber() {
 
         int _idnum = 0;
         int max = 0;
 
         createDatabase("Student");
- 
-        String SQL = " select _id from  StudentInformation";//레코드 개수 찾기
+        String SQL = "select _id from  StudentInformation";//레코드 개수 찾기
         Cursor count = db.rawQuery(SQL,null);
         int recordCount = count.getCount();
-
-
-
         for (int seatnum = 0; seatnum < 3; seatnum++) { //지망 개수
 
             for (int i = 0; i < recordCount-1; i++) { //비교할 인원

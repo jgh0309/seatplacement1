@@ -16,9 +16,7 @@ public class userActivity extends AppCompatActivity
     SQLiteDatabase db;
 
     String a;
-
-    Priority priority = new Priority();
-
+    int b;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -46,6 +44,7 @@ public class userActivity extends AppCompatActivity
                        edit3rd_preference.getText().toString(),edit1st_batting.getText().toString(),edit2nd_batting.getText().toString(),edit3rd_batting.getText().toString());
                 Toast.makeText(getApplicationContext(), a , Toast.LENGTH_SHORT).show();
                 executeRawQuery();
+                executeRawQuery2();
 
                 editName.setText("");
                 edit1st_preference.setText("");
@@ -64,15 +63,11 @@ public class userActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                priority.Setseatnumber();
-
                 Intent intent = new Intent(
                         getApplicationContext(),
                         resultActivity.class
                 );
                 startActivity(intent);
-
-
 
             }
         });
@@ -105,11 +100,11 @@ public class userActivity extends AppCompatActivity
 
 
 
-            a="0";
+            a="삽입성공";
         }catch(Exception e)
         {
             e.printStackTrace();
-            a="1";
+            a="삽입실패";
         }
     }
 
@@ -129,9 +124,27 @@ public class userActivity extends AppCompatActivity
     private  void executeRawQuery() {        //select
         try {
             Cursor cursor = db.rawQuery(
-                    "select name from StudentInformation", null
+                    "select count(*) as total from StudentInformation", null
             );
-            int b= cursor.getCount();
+            b= cursor.getCount();
+            for(int i=0; i<b; i++)
+            {
+                cursor.moveToNext();
+                a = cursor.getString(0);
+                Toast.makeText(getApplicationContext(), a, Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(),"조회에러",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private  void executeRawQuery2() {        //select
+        try {
+            Cursor cursor = db.rawQuery(
+                    "select _id from StudentInformation", null
+            );
+            b= cursor.getCount();
             for(int i=0; i<b; i++)
             {
                 cursor.moveToNext();

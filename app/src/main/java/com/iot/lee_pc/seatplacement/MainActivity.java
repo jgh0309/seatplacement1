@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         createDatabase("Student");
+    //    deleteTable();
         createTable("StudentInformation");
 
         Button button = (Button) findViewById(R.id.startBTN);
