@@ -12,8 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 public class Priority extends AppCompatActivity {
 
     SQLiteDatabase db;
-
-
+    
     public void Setseatnumber() {
 
         int _idnum = 0;
