@@ -44,7 +44,6 @@ public class userActivity extends AppCompatActivity
                        edit3rd_preference.getText().toString(),edit1st_batting.getText().toString(),edit2nd_batting.getText().toString(),edit3rd_batting.getText().toString());
                 Toast.makeText(getApplicationContext(), a , Toast.LENGTH_SHORT).show();
                 executeRawQuery();
-                executeRawQuery2();
 
                 editName.setText("");
                 edit1st_preference.setText("");
@@ -83,19 +82,19 @@ public class userActivity extends AppCompatActivity
 //                            ", "+ edit1st_batting +", "+ edit2nd_batting +", "+ edit3rd_batting +", 0 );"
                     "insert into StudentInformation" +
                             " (name, preference1, preference2, preference3, batting1, batting2, batting3, SeatPlace)" +
-                            " values ( 'PARK', 3, 5, 4, 4500, 2000, 3000, 0 );");
+                            " values ( 'PARK', 3, 1, 4, 4500, 2000, 3000, 100 );");
             db.execSQL(
                     "insert into StudentInformation" +
                             " (name, preference1, preference2, preference3, batting1, batting2, batting3, SeatPlace)" +
-                            " values ( 'TAE', 2, 3, 4, 4400, 2100, 3200, 0 );");
+                            " values ( 'TAE', 2, 3, 4, 4400, 2100, 3200, 100 );");
             db.execSQL(
                     "insert into StudentInformation" +
                             " (name, preference1, preference2, preference3, batting1, batting2, batting3, SeatPlace)" +
-                            " values ( 'HUNG', 1, 3, 6, 4200, 1000, 2000, 0 );");
+                            " values ( 'HUNG', 1, 3, 4, 4200, 1000, 2000, 100 );");
             db.execSQL(
                     "insert into StudentInformation" +
                             " (name, preference1, preference2, preference3, batting1, batting2, batting3, SeatPlace)" +
-                            " values ( 'KIM', 1, 2, 3, 3500, 2000, 3000, 0 );");
+                            " values ( 'KIM', 1, 2, 3, 3500, 2000, 3000, 100 );");
 
 
 
@@ -124,7 +123,7 @@ public class userActivity extends AppCompatActivity
     private  void executeRawQuery() {        //select
         try {
             Cursor cursor = db.rawQuery(
-                    "select count(*) as total from StudentInformation", null
+                    "select _id as total from StudentInformation", null
             );
             b= cursor.getCount();
             for(int i=0; i<b; i++)
@@ -138,24 +137,5 @@ public class userActivity extends AppCompatActivity
             Toast.makeText(getApplicationContext(),"조회에러",Toast.LENGTH_SHORT).show();
         }
     }
-
-    private  void executeRawQuery2() {        //select
-        try {
-            Cursor cursor = db.rawQuery(
-                    "select _id from StudentInformation", null
-            );
-            b= cursor.getCount();
-            for(int i=0; i<b; i++)
-            {
-                cursor.moveToNext();
-                a = cursor.getString(0);
-                Toast.makeText(getApplicationContext(), a, Toast.LENGTH_SHORT).show();
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-            Toast.makeText(getApplicationContext(),"조회에러",Toast.LENGTH_SHORT).show();
-        }
-    }
-
 
 }

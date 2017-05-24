@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         createDatabase("Student");
-    //    deleteTable();
+        dropTable();
         createTable("StudentInformation");
 
         Button button = (Button) findViewById(R.id.startBTN);
@@ -69,10 +69,10 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public void deleteTable(){
+    public void dropTable(){
         try{
             db.execSQL(
-                    " delete from StudentInformation"
+                    " drop table StudentInformation"
             );
         }catch (Exception e)
         {
