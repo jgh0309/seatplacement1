@@ -16,6 +16,9 @@ public class userActivity extends AppCompatActivity
 
     String a;
 
+    Priority priority = new Priority();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -59,11 +62,17 @@ public class userActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                priority.Setseatnumber();
+
+
                 Intent intent = new Intent(
                         getApplicationContext(),
                         resultActivity.class
                 );
                 startActivity(intent);
+
+
+
             }
         });
     }

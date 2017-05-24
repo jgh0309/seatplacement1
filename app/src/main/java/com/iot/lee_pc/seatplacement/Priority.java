@@ -14,7 +14,7 @@ public class Priority extends AppCompatActivity {
     SQLiteDatabase db;
 
 
-    private void Setseatnumber() {
+    public void Setseatnumber() {
 
         int _idnum = 0;
         int max = 0;
@@ -22,7 +22,14 @@ public class Priority extends AppCompatActivity {
         //Map<String,String>map = new HashMap<String,String>();
         createDatabase("Student");
 
-        for (int seatnum = 0; seatnum < 3; seatnum++) {
+        String SQL = " select stu_no from  StudentInformation";//레코드 개수 찾기
+        Cursor count = db.rawQuery(SQL,null);
+        int recordCount = count.getCount();
+
+
+
+        for (int seatnum = 0; seatnum < recordCount; seatnum++) { //지망 개수
+
             for (int i = 0; i < 5; i++) { //비교할 인원
                 //_idnum = 아이디
                 //stu_seat seatnum = 순위좌석 번호
@@ -32,7 +39,6 @@ public class Priority extends AppCompatActivity {
 
                 String stu1 = " select " + _idnum + ",  stu_seat" + seatnum + ", money_tender" + seatnum + ", seat_final from StudentInformation";
                 Cursor c1 = db.rawQuery(stu1, null);
-                int recordCount = c1.getCount();
 
                 c1.moveToNext();
                 String stu_no = c1.getString(0);
@@ -44,13 +50,13 @@ public class Priority extends AppCompatActivity {
                     for (int j = i + 1; j < 6; j++) {
                         String stu2 = " select " + _idnum + ",  stu_seat" + seatnum + ", money_tender" + seatnum + ", seat_final from StudentInformation";
                         Cursor c2 = db.rawQuery(stu2, null);
-                        int recordCount_compare = c2.getCount();
+             //           int recordCount_compare = c2.getCount();
 
                         c1.moveToNext();
                         String stu_no_compare = c2.getString(0);
                         String stu_seat_compare = c2.getString(1);
                         String stu_money_compare = c2.getString(2);
-                        String stu_set_seat_compare = c2.getString(2);
+               //         String stu_set_seat_compare = c2.getString(2);
 
                         if (stu_seat.equals(stu_seat_compare)) { //선택한 자리가 같을 시
                             int _seat_money = Integer.parseInt(stu_money); //비교 하는 사람의 입찰금을 저장
