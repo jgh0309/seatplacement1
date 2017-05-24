@@ -33,9 +33,11 @@ public class ListFragment extends Fragment
 //endregion
 
     private String[] _albums;
+    resultActivity _resultActivity = new resultActivity();
 
     public ListFragment()
     {
+
         _albums = new String[5];
         _albums[0] = "나만몰랐던 이야기";
         _albums[1] = "좋은날";

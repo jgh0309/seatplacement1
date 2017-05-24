@@ -11,6 +11,8 @@ import android.widget.Toast;
 public class resultActivity extends AppCompatActivity
 {
     SQLiteDatabase db;
+    String name;
+    String seat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -29,7 +31,7 @@ public class resultActivity extends AppCompatActivity
             @Override
             public void onclick(int position)
             {
-                Toast.makeText(listFragment.getContext(), "아이유의 " + position + "번째 앨범입니다.", Toast.LENGTH_SHORT);
+     //           Toast.makeText(listFragment.getContext(), "아이유의 " + position + "번째 앨범입니다.", Toast.LENGTH_SHORT);
             }
         });
     }
@@ -64,14 +66,10 @@ public class resultActivity extends AppCompatActivity
                         {
                             String stu2 = " select _id ,  preference" + preferences + ", batting" + preferences + ", SeatPlace from StudentInformation where _id=" + j;
                             Cursor c2 = db.rawQuery(stu2, null);
-                            //           int recordCount_compare = c2.getCount();
-
-                            //        c1.moveToFirst();
                             c2.moveToNext();
-                            String stu_no_compare = c2.getString(0);
+//                          String stu_no_compare = c2.getString(0);
                             String stu_seat_compare = c2.getString(1);
                             String stu_money_compare = c2.getString(2);
-                            //         String stu_set_seat_compare = c2.getString(2);
 
 
                             if (stu_seat.equals(stu_seat_compare))
@@ -106,7 +104,6 @@ public class resultActivity extends AppCompatActivity
         if(cursor.getInt(0) == 0){
             db.execSQL("update StudentInformation set SeatPlace = " + stu_seat + " where _id = " + stu_no);
         }
-
     }
 
     public void createDatabase(String dbName) { //db생성
@@ -120,7 +117,7 @@ public class resultActivity extends AppCompatActivity
         }
     }
 
-    private  void executeRawQueryName_Seatplace() {        //select
+    public void executeRawQueryName_Seatplace() {        //select
         try {
             Cursor cursor = db.rawQuery(
                     "select name,SeatPlace from StudentInformation ", null
@@ -129,9 +126,9 @@ public class resultActivity extends AppCompatActivity
             for(int i=0; i<a; i++)
             {
                 cursor.moveToNext();
-                String b = cursor.getString(0);
-                String c = cursor.getString(1);
-                Toast.makeText(getApplicationContext(), b +": "+ c, Toast.LENGTH_SHORT).show();
+                name = cursor.getString(0);
+                seat = cursor.getString(1);
+                Toast.makeText(getApplicationContext(), name +": "+ seat, Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e){
             e.printStackTrace();

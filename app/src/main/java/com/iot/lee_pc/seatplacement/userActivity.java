@@ -2,7 +2,6 @@ package com.iot.lee_pc.seatplacement;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -51,7 +50,6 @@ public class userActivity extends AppCompatActivity
                 edit1st_batting.setText("");
                 edit2nd_batting.setText("");
                 edit3rd_batting.setText("");
-
             }
         });
 
@@ -66,7 +64,6 @@ public class userActivity extends AppCompatActivity
                         resultActivity.class
                 );
                 startActivity(intent);
-
             }
         });
     }
@@ -121,24 +118,6 @@ public class userActivity extends AppCompatActivity
             e.printStackTrace();
         }
 
-    }
-
-    private  void executeRawQuery() {        //select
-        try {
-            Cursor cursor = db.rawQuery(
-                    "select _id as total from StudentInformation", null
-            );
-            b= cursor.getCount();
-            for(int i=0; i<b; i++)
-            {
-                cursor.moveToNext();
-                a = cursor.getString(0);
-                Toast.makeText(getApplicationContext(), a, Toast.LENGTH_SHORT).show();
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-            Toast.makeText(getApplicationContext(),"조회에러",Toast.LENGTH_SHORT).show();
-        }
     }
 
 }
