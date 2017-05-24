@@ -81,23 +81,27 @@ public class userActivity extends AppCompatActivity
 //                            ", "+ edit1st_batting +", "+ edit2nd_batting +", "+ edit3rd_batting +", 0 );"
                     "insert into StudentInformation" +
                             " (name, preference1, preference2, preference3, batting1, batting2, batting3, SeatPlace)" +
-                            " values ( 'PARK', 3, 1, 4, 4500, 2000, 3000, 100 );");
+                            " values ( 'PARK', 3, 1, 2, 4500, 2000, 3000, 100 );");
             db.execSQL(
                     "insert into StudentInformation" +
                             " (name, preference1, preference2, preference3, batting1, batting2, batting3, SeatPlace)" +
-                            " values ( 'TAE', 2, 3, 4, 4400, 2100, 3200, 100 );");
+                            " values ( 'TAE', 4, 3, 1, 4400, 2100, 3200, 100 );");
             db.execSQL(
                     "insert into StudentInformation" +
                             " (name, preference1, preference2, preference3, batting1, batting2, batting3, SeatPlace)" +
-                            " values ( 'HUNG', 1, 3, 4, 4200, 1000, 2000, 100 );");
+                            " values ( 'HUNG', 6, 3, 2, 4200, 1000, 2000, 100 );");
             db.execSQL(
                     "insert into StudentInformation" +
                             " (name, preference1, preference2, preference3, batting1, batting2, batting3, SeatPlace)" +
-                            " values ( 'KIM', 1, 2, 3, 3500, 2000, 3000, 100 );");
-
-
-
-
+                            " values ( 'KIM', 1, 5, 2, 3800, 2000, 3000, 100 );");
+            db.execSQL(
+                    "insert into StudentInformation" +
+                            " (name, preference1, preference2, preference3, batting1, batting2, batting3, SeatPlace)" +
+                            " values ( 'JUNG', 5, 4, 2, 3500, 2000, 3000, 100 );");
+            db.execSQL(
+                    "insert into StudentInformation" +
+                            " (name, preference1, preference2, preference3, batting1, batting2, batting3, SeatPlace)" +
+                            " values ( 'LEE', 1, 6, 2, 3500, 2000, 3000, 100 );");
             a="삽입성공";
         }catch(Exception e)
         {

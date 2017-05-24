@@ -36,25 +36,20 @@ public class resultActivity extends AppCompatActivity
 
     public void Setseatnumber() {
 
-        int _idnum = 0;
         int max = 0;
 
         createDatabase("Student");
+
         String SQL = "select _id from  StudentInformation";//레코드 개수 찾기
         Cursor count = db.rawQuery(SQL,null);
         int recordCount = count.getCount();
         count.close();
 
-        for (int seatnum = 1; seatnum < 4; seatnum++) { //지망 개수
+        for (int preferences = 1; preferences < 4; preferences++) { //1~3지망까지 비교
 
-            for (int i = 1; i <= recordCount; i++) { //비교할 인원
-                // i = 아이디
-                //stu_seat seatnum = 순위좌석 번호
-                //money_seatnum = 순위좌석 경매가격
-                //seat_final = 최종 확인 좌석
+            for (int i = 1; i <= recordCount; i++) { //비교할 인원     i = 아이디 ,  stu_seat = 순위좌석 번호 ,  money_seatnum = 순위좌석 경매가격 ,  seat_final = 최종 확인 좌석
 
-
-                String stu1 = " select _id,  preference" + seatnum + ", batting" + seatnum + ", SeatPlace from StudentInformation  where _id="+i;
+                String stu1 = " select _id,  preference" + preferences + ", batting" + preferences + ", SeatPlace from StudentInformation  where _id="+i;
                 Cursor c1 = db.rawQuery(stu1, null);
                 c1.moveToNext();
                 String stu_no = c1.getString(0);
@@ -67,7 +62,7 @@ public class resultActivity extends AppCompatActivity
                     {
                         if (i != j)
                         {
-                            String stu2 = " select _id ,  preference" + seatnum + ", batting" + seatnum + ", SeatPlace from StudentInformation where _id=" + j;
+                            String stu2 = " select _id ,  preference" + preferences + ", batting" + preferences + ", SeatPlace from StudentInformation where _id=" + j;
                             Cursor c2 = db.rawQuery(stu2, null);
                             //           int recordCount_compare = c2.getCount();
 
@@ -86,16 +81,15 @@ public class resultActivity extends AppCompatActivity
 
                                 if (_seat_money > _seat_money_compare)
                                 { //금액이 더욱 크면 확정 자리에 금액을 넣음
-
-                                    db.execSQL("update StudentInformation set SeatPlace = " + stu_seat + " where _id = " + stu_no);
+                                    isSeatempty(stu_seat,stu_no);
                                 } else if (_seat_money < _seat_money_compare && max < _seat_money_compare)
                                 { //작으면 다른 사람의 금액을 넣음 ,max보다 큰 값이 들어가야 들어감
                                     max = _seat_money_compare;
-                                    db.execSQL("update StudentInformation set SeatPlace= " + stu_seat_compare + " where _id = " + stu_no_compare);
+                                    db.execSQL("update StudentInformation set SeatPlace= 100 where _id = " + stu_no);
                                 }
                             } else
                             {//선택한 자리가 다를 시 최종 자리 seat_final 에 자리번호가 들어간다
-                                db.execSQL("update StudentInformation set SeatPlace = " + stu_seat + " where _id = " + stu_no);
+                                isSeatempty(stu_seat,stu_no);
                             }
                             c2.close();
                         }
@@ -104,6 +98,15 @@ public class resultActivity extends AppCompatActivity
             c1.close();
             }
         }
+    }
+
+    public void isSeatempty(String stu_seat, String stu_no){
+        Cursor cursor =  db.rawQuery(" select count(*) as elreadySeat from StudentInformation where SeatPlace = "+ stu_seat ,null);
+        cursor.moveToNext();
+        if(cursor.getInt(0) == 0){
+            db.execSQL("update StudentInformation set SeatPlace = " + stu_seat + " where _id = " + stu_no);
+        }
+
     }
 
     public void createDatabase(String dbName) { //db생성
@@ -128,8 +131,7 @@ public class resultActivity extends AppCompatActivity
                 cursor.moveToNext();
                 String b = cursor.getString(0);
                 String c = cursor.getString(1);
-                Toast.makeText(getApplicationContext(), b, Toast.LENGTH_SHORT).show();
-                Toast.makeText(getApplicationContext(), c, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), b +": "+ c, Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e){
             e.printStackTrace();
