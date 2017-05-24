@@ -20,7 +20,7 @@ public class Priority extends AppCompatActivity {
         int max = 0;
 
         createDatabase("Student");
-
+ 
         String SQL = " select _id from  StudentInformation";//레코드 개수 찾기
         Cursor count = db.rawQuery(SQL,null);
         int recordCount = count.getCount();
