@@ -67,4 +67,15 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
         }
     }
+
+    public void deleteTable(){
+        try{
+            db.execSQL(
+                    " delete from StudentInformation"
+            );
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
 }

@@ -2,6 +2,7 @@ package com.iot.lee_pc.seatplacement;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -44,6 +45,7 @@ public class userActivity extends AppCompatActivity
                insertStudentInfo(editName.getText().toString(),edit1st_preference.getText().toString(),edit2nd_preference.getText().toString(),
                        edit3rd_preference.getText().toString(),edit1st_batting.getText().toString(),edit2nd_batting.getText().toString(),edit3rd_batting.getText().toString());
                 Toast.makeText(getApplicationContext(), a , Toast.LENGTH_SHORT).show();
+                executeRawQuery();
 
                 editName.setText("");
                 edit1st_preference.setText("");
@@ -63,7 +65,6 @@ public class userActivity extends AppCompatActivity
             public void onClick(View v)
             {
                 priority.Setseatnumber();
-
 
                 Intent intent = new Intent(
                         getApplicationContext(),
@@ -124,4 +125,24 @@ public class userActivity extends AppCompatActivity
         }
 
     }
+
+    private  void executeRawQuery() {        //select
+        try {
+            Cursor cursor = db.rawQuery(
+                    "select name from StudentInformation", null
+            );
+            int b= cursor.getCount();
+            for(int i=0; i<b; i++)
+            {
+                cursor.moveToNext();
+                a = cursor.getString(0);
+                Toast.makeText(getApplicationContext(), a, Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(),"조회에러",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 }
