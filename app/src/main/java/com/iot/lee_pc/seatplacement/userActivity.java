@@ -43,7 +43,6 @@ public class userActivity extends AppCompatActivity
                insertStudentInfo(editName.getText().toString(),edit1st_preference.getText().toString(),edit2nd_preference.getText().toString(),
                        edit3rd_preference.getText().toString(),edit1st_batting.getText().toString(),edit2nd_batting.getText().toString(),edit3rd_batting.getText().toString());
                 Toast.makeText(getApplicationContext(), a , Toast.LENGTH_SHORT).show();
-                executeRawQuery();
 
                 editName.setText("");
                 edit1st_preference.setText("");
