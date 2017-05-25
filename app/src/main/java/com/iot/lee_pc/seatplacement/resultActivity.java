@@ -22,13 +22,11 @@ public class resultActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        Setseatnumber();
-  //      setStudentInfo(array);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
+        Setseatnumber();
 
         _recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-
         ArrayList<Info> infos = loadData();
 
         infoadapter infoadapter = new infoadapter(infos);

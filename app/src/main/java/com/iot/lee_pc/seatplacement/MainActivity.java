@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -22,6 +23,13 @@ public class MainActivity extends AppCompatActivity
         createDatabase("Student");
         dropTable();
         createTable("StudentInformation");
+
+        EditText editTotalSeat = (EditText) findViewById(R.id.totalSeat);
+        EditText editTotalMan = (EditText) findViewById(R.id.totalman);
+
+
+        Intent intent = new Intent(getApplicationContext(), userActivity.class);
+        Content total = new Content();
 
         Button button = (Button) findViewById(R.id.startBTN);
         button.setOnClickListener(new View.OnClickListener()

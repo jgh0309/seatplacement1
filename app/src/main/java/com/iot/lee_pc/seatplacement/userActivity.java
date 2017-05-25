@@ -85,11 +85,11 @@ public class userActivity extends AppCompatActivity
                                   String edit1st_batting, String edit2nd_batting, String edit3rd_batting){
         try{
             db.execSQL(
-//                    "insert into StudentInformation" +
-//                            " (name, preference1, preference2, preference3, batting1, batting2, batting3, SeatPlace)" +
-//                            " values ( '" + editName +"', "+ edit1st_preference +", "+ edit2nd_preference +", "+ edit3rd_preference +
-//                            ", "+ edit1st_batting +", "+ edit2nd_batting +", "+ edit3rd_batting +", 0 );"
                     "insert into StudentInformation" +
+                            " (name, preference1, preference2, preference3, batting1, batting2, batting3, SeatPlace)" +
+                            " values ( '" + editName +"', "+ edit1st_preference +", "+ edit2nd_preference +", "+ edit3rd_preference +
+                            ", "+ edit1st_batting +", "+ edit2nd_batting +", "+ edit3rd_batting +", 100 );"
+                    /*"insert into StudentInformation" +
                             " (name, preference1, preference2, preference3, batting1, batting2, batting3, SeatPlace)" +
                             " values ( 'PARK', 3, 1, 2, 4500, 2000, 3000, 100 );");
             db.execSQL(
@@ -111,7 +111,7 @@ public class userActivity extends AppCompatActivity
             db.execSQL(
                     "insert into StudentInformation" +
                             " (name, preference1, preference2, preference3, batting1, batting2, batting3, SeatPlace)" +
-                            " values ( 'LEE', 1, 6, 2, 3500, 2000, 3000, 100 );");
+                            " values ( 'LEE', 1, 6, 2, 3500, 2000, 3000, 100 );"*/);
             Toast.makeText(getApplicationContext(), "삽입성공" , Toast.LENGTH_SHORT).show();
         }catch(Exception e)
         {
