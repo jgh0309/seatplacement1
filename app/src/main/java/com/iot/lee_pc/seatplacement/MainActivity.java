@@ -12,8 +12,10 @@ import android.widget.EditText;
 public class MainActivity extends AppCompatActivity
 {
     SQLiteDatabase db;
-
-    String a;
+    int editSeat;
+    int editman;
+    EditText editTotalSeat;
+    EditText editTotalMan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -24,12 +26,9 @@ public class MainActivity extends AppCompatActivity
         dropTable();
         createTable("StudentInformation");
 
-        EditText editTotalSeat = (EditText) findViewById(R.id.totalSeat);
-        EditText editTotalMan = (EditText) findViewById(R.id.totalman);
+        editTotalSeat = (EditText) findViewById(R.id.totalSeat);
+        editTotalMan = (EditText) findViewById(R.id.totalman);
 
-
-        Intent intent = new Intent(getApplicationContext(), userActivity.class);
-        Content total = new Content();
 
         Button button = (Button) findViewById(R.id.startBTN);
         button.setOnClickListener(new View.OnClickListener()
@@ -37,10 +36,11 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Intent intent = new Intent(
-                        getApplicationContext(),
-                        userActivity.class
-                );
+                editSeat = Integer.parseInt(editTotalSeat.getText().toString());
+                editman = Integer.parseInt(editTotalMan.getText().toString());
+                Intent intent = new Intent(getApplicationContext(), userActivity.class);
+                Content total = new Content(editSeat,editman);
+                intent.putExtra("total",total);
                 startActivity(intent);
             }
         });

@@ -39,6 +39,7 @@
         android:layout_height="wrap_content"
         android:text="시작!"
         tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="302dp"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="311dp"/>
 
 </android.support.constraint.ConstraintLayout>

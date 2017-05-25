@@ -93,17 +93,9 @@ public class resultActivity extends AppCompatActivity {
                 c1.close();
             }
             if (preferences == 3) {
-                // randomSeat(recordCount);
-////////////////////////////////////////////////////
-
-                //       String Record = "select _id from  StudentInformation where  SeatPlace = 100";//레코드 개수 찾기
-                //      Cursor _count = db.rawQuery(Record, null);
-                //     int nullseatCount = _count.getCount();  //빈자리 개수
-
                 int temp = 0;
                 int seatnumber;
                 int a[] = new int[recordCount]; //int형 배열 선언 빈자리의 a개수
-                //     _count.close();
                 int b[] = new int[recordCount];
                 for (int i = 0; i < recordCount; i++) {
                     a[i] = (int) (Math.random() * recordCount + 1);
@@ -117,47 +109,31 @@ public class resultActivity extends AppCompatActivity {
                         }
                     }
                 }
-       //         Cursor rancursor = db.rawQuery("select SeatPlace from StudentInformation ", null);
-         //               rancursor.moveToNext();
                 Cursor saveCursor = db.rawQuery("select SeatPlace from StudentInformation ", null);
                 for(int i = 0 ; i < recordCount ; i ++ )
                 {
                     saveCursor.moveToNext();
                     b[i]=saveCursor.getInt(0);
                 }
-
                 for (int i = 0; i < recordCount; i++) { //랜덤
 
                     for (int j = 0; j < recordCount; j++) { //사용자
-//                        Cursor rancursor = db.rawQuery("select SeatPlace from StudentInformation where _id=" + j + 1, null);
-//                        rancursor.moveToNext();
-//                        seatnumber = parseInt(rancursor.getString(j));
-
-                        //   rancursor.moveToFirst();
-
                         if (a[i] == b[j]) { //랜덤값과 자리값이 같으면 멈추고 다음 랜덤자리 시작
                             break;
-
                         }
                         if (100 == b[j]) { //자리가 비어있으면 저장 을하고
                             temp = j + 1; //비어있는 자리의 위치
 
                         }
-
-
                         if (j == recordCount - 1) // 랜덤 자리 시작이 되지않고 넘어오면 마지막에 업데이트
                         {
                             db.execSQL("update StudentInformation set SeatPlace " + "= " + a[i] + " where _id=" + temp);
                             break;
                         }
-              //          rancursor.close();
 
                     }
                 }
-
-
             }
-
         }
     }
 
@@ -201,65 +177,7 @@ public class resultActivity extends AppCompatActivity {
         }
         return infos;
     }
-
-    /*public void randomSeat(int recordCount) {
-
-        String SQL = "select _id from  StudentInformation where  SeatPlace = 100";//레코드 개수 찾기
-        Cursor count = db.rawQuery(SQL, null);
-        int nullseatCount = count.getCount();  //빈자리 개수
-
-        int temp=0;
-        int seatnumber;
-        int a[] = new int[recordCount]; //int형 배열 선언 빈자리의 a개수
-        count.close();
-
-        for (int i = 0; i < recordCount; i++) {
-            a[i] = (int) (Math.random()*recordCount+1);
-            for (int j = 0; j < i; j++) //중복제거를 위한 for문
-            {
-
-                if (a[i] == a[j]) {
-
-                    i--;
-                    break;
-                }
-            }
-        }
-
-        for (int i = 0; i < recordCount; i++) { //랜덤
-
-
-              for (int j = 0; j < recordCount; j++) { //사용자
-                    Cursor rancursor = db.rawQuery("select SeatPlace from StudentInformation where _id=" + j+1, null);
-                rancursor.moveToFirst();
-                  seatnumber = rancursor.getInt(0);
-
-               //   rancursor.moveToFirst();
-                   rancursor.close();
-                    if(100 == seatnumber) { //자리가 비어있으면 저장 을하고
-                        temp= j+1; //비어있는 자리의 위치
-                    }
-
-                    if (a[i] == seatnumber) { //랜덤값과 자리값이 같으면 멈추고 다음 랜덤자리 시작
-                      break;
-
-                    }
-                    if(j == recordCount -1) // 랜덤 자리 시작이 되지않고 넘어오면 마지막에 업데이트
-                    {
-                        db.execSQL("update StudentInformation set SeatPlace = " + a[i] + " where _id=" + temp);
-                        break;
-                    }
-
-                }
-            }
-
-        }*/
-
-
-
-
-
-    }
+}
 
 
 

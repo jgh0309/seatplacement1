@@ -8,33 +8,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class userActivity extends AppCompatActivity
 {
     SQLiteDatabase db;
-
+    int totalseat;
+    int totalman;
+    int totalcount=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
-
-
-        Button button2 = (Button) findViewById(R.id.buttonDrawing);
-        button2.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(
-                        getApplicationContext(),
-                        drawingRect.class
-                );
-                startActivity(intent);
-            }
-        });
+        createDatabase("Student");      //Main에서 생성한 db 가져오기(open)
 
         final EditText editName = (EditText) findViewById(R.id.editName);
         final EditText edit1st_preference = (EditText) findViewById(R.id.edit1st_preference);
@@ -43,26 +32,42 @@ public class userActivity extends AppCompatActivity
         final EditText edit1st_batting = (EditText) findViewById(R.id.edit1st_batting);
         final EditText edit2nd_batting = (EditText) findViewById(R.id.edit2nd_batting);
         final EditText edit3rd_batting = (EditText) findViewById(R.id.edit3rd_batting);
+        TextView textView = (TextView) findViewById(R.id.textView3);
 
-        createDatabase("Student");      //Main에서 생성한 db 가져오기(open)
+        Intent intent = getIntent();
+        Content total = (Content) intent.getSerializableExtra("total");
+        totalseat = total.getTotalseat();
+        totalman = total.getTotalman();
+        textView.setText("총 "+totalseat+" 개의 좌석이 있습니다.");
 
-        Button button = (Button) findViewById(R.id.nextBTN);
+        final Button button = (Button) findViewById(R.id.nextBTN);
         button.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-               insertStudentInfo(editName.getText().toString(),edit1st_preference.getText().toString(),edit2nd_preference.getText().toString(),
-                       edit3rd_preference.getText().toString(),edit1st_batting.getText().toString(),edit2nd_batting.getText().toString(),edit3rd_batting.getText().toString());
+                final int preference1 = Integer.parseInt(edit1st_preference.getText().toString());
+                final int preference2 = Integer.parseInt(edit1st_preference.getText().toString());
+                final int preference3 = Integer.parseInt(edit1st_preference.getText().toString());
+                if((preference1<=totalseat) && (preference2<=totalseat) && (preference3<=totalseat))
+                {
+                    insertStudentInfo(editName.getText().toString(), edit1st_preference.getText().toString(), edit2nd_preference.getText().toString(),
+                            edit3rd_preference.getText().toString(), edit1st_batting.getText().toString(), edit2nd_batting.getText().toString(), edit3rd_batting.getText().toString());
+                    editName.setText("");
+                    edit1st_preference.setText("");
+                    edit2nd_preference.setText("");
+                    edit3rd_preference.setText("");
+                    edit1st_batting.setText("");
+                    edit2nd_batting.setText("");
+                    edit3rd_batting.setText("");
+                    totalcount++;
+                }
+                else Toast.makeText(getApplicationContext(),"최대 좌석수 이하로 선택하세요.",Toast.LENGTH_SHORT).show();
 
-
-                editName.setText("");
-                edit1st_preference.setText("");
-                edit2nd_preference.setText("");
-                edit3rd_preference.setText("");
-                edit1st_batting.setText("");
-                edit2nd_batting.setText("");
-                edit3rd_batting.setText("");
+                if(totalcount == totalman){
+                    Toast.makeText(getApplicationContext(),"참여인원 모두가 선택하였습니다."+"\n"+"결과보기 버튼을 클릭해주세요.",Toast.LENGTH_SHORT).show();
+                    button.setVisibility(View.INVISIBLE);
+                }
             }
         });
 
@@ -79,6 +84,20 @@ public class userActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
+
+        Button button2 = (Button) findViewById(R.id.buttonDrawing);
+        button2.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(
+                        getApplicationContext(),
+                        drawingRect.class
+                );
+                startActivity(intent);
+            }
+        });
     }
 
     public void insertStudentInfo(String editName ,String edit1st_preference ,String edit2nd_preference ,String edit3rd_preference ,
@@ -87,6 +106,10 @@ public class userActivity extends AppCompatActivity
             db.execSQL(
 
                     "insert into StudentInformation" +
+                            " (name, preference1, preference2, preference3, batting1, batting2, batting3, SeatPlace)" +
+                            " values ( '" + editName +"', "+ edit1st_preference +", "+ edit2nd_preference +", "+ edit3rd_preference +
+                            ", "+ edit1st_batting +", "+ edit2nd_batting +", "+ edit3rd_batting +", 100 );"
+                    /*"insert into StudentInformation" +
                             " (name, preference1, preference2, preference3, batting1, batting2, batting3, SeatPlace)" +
                             " values ( 'PARK', 3, 1, 2, 4500, 2000, 3000, 100 );");
             db.execSQL(
@@ -108,7 +131,7 @@ public class userActivity extends AppCompatActivity
             db.execSQL(
                     "insert into StudentInformation" +
                             " (name, preference1, preference2, preference3, batting1, batting2, batting3, SeatPlace)" +
-                            " values ( 'LEE', 1, 1, 1, 3500, 2000, 3000, 100 );");
+                            " values ( 'LEE', 1, 6, 2, 3500, 2000, 3000, 100 );"*/);
             Toast.makeText(getApplicationContext(), "삽입성공" , Toast.LENGTH_SHORT).show();
         }catch(Exception e)
         {
