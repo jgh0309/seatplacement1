@@ -14,8 +14,6 @@ public class userActivity extends AppCompatActivity
 {
     SQLiteDatabase db;
 
-    String a;
-    int b;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -41,7 +39,7 @@ public class userActivity extends AppCompatActivity
             {
                insertStudentInfo(editName.getText().toString(),edit1st_preference.getText().toString(),edit2nd_preference.getText().toString(),
                        edit3rd_preference.getText().toString(),edit1st_batting.getText().toString(),edit2nd_batting.getText().toString(),edit3rd_batting.getText().toString());
-                Toast.makeText(getApplicationContext(), a , Toast.LENGTH_SHORT).show();
+
 
                 editName.setText("");
                 edit1st_preference.setText("");
@@ -99,11 +97,11 @@ public class userActivity extends AppCompatActivity
                     "insert into StudentInformation" +
                             " (name, preference1, preference2, preference3, batting1, batting2, batting3, SeatPlace)" +
                             " values ( 'LEE', 1, 6, 2, 3500, 2000, 3000, 100 );");
-            a="삽입성공";
+            Toast.makeText(getApplicationContext(), "삽입성공" , Toast.LENGTH_SHORT).show();
         }catch(Exception e)
         {
             e.printStackTrace();
-            a="삽입실패";
+            Toast.makeText(getApplicationContext(), "삽입실패", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -119,5 +117,6 @@ public class userActivity extends AppCompatActivity
         }
 
     }
+
 
 }

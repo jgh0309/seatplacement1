@@ -4,39 +4,43 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+
+import java.util.ArrayList;
 
 public class resultActivity extends AppCompatActivity
 {
+    private RecyclerView _recyclerView;
     SQLiteDatabase db;
     String name;
     String seat;
+    int recordCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        Setseatnumber();
+  //      setStudentInfo(array);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
-        Setseatnumber();
-        executeRawQueryName_Seatplace();
 
+        _recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        final ListFragment listFragment = (ListFragment) fragmentManager.findFragmentById(R.id.listfragment);
+        ArrayList<Info> infos = loadData();
 
-        listFragment.setiu(new ListFragment.iualbum()
-        {
-            @Override
-            public void onclick(int position)
-            {
-     //           Toast.makeText(listFragment.getContext(), "아이유의 " + position + "번째 앨범입니다.", Toast.LENGTH_SHORT);
-            }
-        });
+        infoadapter infoadapter = new infoadapter(infos);
+        _recyclerView.setAdapter(infoadapter);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        _recyclerView.setLayoutManager(layoutManager);
+        _recyclerView.setItemAnimator(new DefaultItemAnimator());
+
     }
 
-    public void Setseatnumber() {
+    private void Setseatnumber() {
 
         int max = 0;
 
@@ -44,7 +48,7 @@ public class resultActivity extends AppCompatActivity
 
         String SQL = "select _id from  StudentInformation";//레코드 개수 찾기
         Cursor count = db.rawQuery(SQL,null);
-        int recordCount = count.getCount();
+        recordCount = count.getCount();
         count.close();
 
         for (int preferences = 1; preferences < 4; preferences++) { //1~3지망까지 비교
@@ -98,7 +102,7 @@ public class resultActivity extends AppCompatActivity
         }
     }
 
-    public void isSeatempty(String stu_seat, String stu_no){
+    private void isSeatempty(String stu_seat, String stu_no){
         Cursor cursor =  db.rawQuery(" select count(*) as elreadySeat from StudentInformation where SeatPlace = "+ stu_seat ,null);
         cursor.moveToNext();
         if(cursor.getInt(0) == 0){
@@ -106,7 +110,7 @@ public class resultActivity extends AppCompatActivity
         }
     }
 
-    public void createDatabase(String dbName) { //db생성
+    private void createDatabase(String dbName) { //db생성
         try {  //오류검출시도
             db = openOrCreateDatabase(
                     dbName,
@@ -117,22 +121,26 @@ public class resultActivity extends AppCompatActivity
         }
     }
 
-    public void executeRawQueryName_Seatplace() {        //select
+    private ArrayList<Info> loadData()
+    {
+        ArrayList<Info> infos = new ArrayList<>();
         try {
-            Cursor cursor = db.rawQuery(
-                    "select name,SeatPlace from StudentInformation ", null
-            );
-            int a= cursor.getCount();
-            for(int i=0; i<a; i++)
-            {
-                cursor.moveToNext();
-                name = cursor.getString(0);
-                seat = cursor.getString(1);
-                Toast.makeText(getApplicationContext(), name +": "+ seat, Toast.LENGTH_SHORT).show();
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-            Toast.makeText(getApplicationContext(),"조회에러",Toast.LENGTH_SHORT).show();
+            Cursor cursor = db.rawQuery("select name,SeatPlace from StudentInformation ", null);
+            recordCount= cursor.getCount();
+        for (int i = 0; i < recordCount; i++)
+        {
+            cursor.moveToNext();
+            name = cursor.getString(0);
+            seat = cursor.getString(1);
+            Info info = new Info();
+            info.setName(name);
+            info.setSeat(seat);
+            infos.add(info);
         }
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return infos;
     }
 }
