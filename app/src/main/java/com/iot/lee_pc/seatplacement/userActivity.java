@@ -21,6 +21,21 @@ public class userActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
 
+
+        Button button2 = (Button) findViewById(R.id.buttonDrawing);
+        button2.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(
+                        getApplicationContext(),
+                        drawingRect.class
+                );
+                startActivity(intent);
+            }
+        });
+
         final EditText editName = (EditText) findViewById(R.id.editName);
         final EditText edit1st_preference = (EditText) findViewById(R.id.edit1st_preference);
         final EditText edit2nd_preference = (EditText) findViewById(R.id.edit2nd_preference);
