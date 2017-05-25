@@ -28,7 +28,7 @@ public class TenderMoney {
             String  seat_number= c1.getString(2);
 //출력 하면 됨
         _sum = _sum +Integer.parseInt(seat_money);
-
+        c1.close();
         }
 
 
