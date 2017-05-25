@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -36,12 +37,25 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                editSeat = Integer.parseInt(editTotalSeat.getText().toString());
-                editman = Integer.parseInt(editTotalMan.getText().toString());
-                Intent intent = new Intent(getApplicationContext(), userActivity.class);
-                Content total = new Content(editSeat,editman);
-                intent.putExtra("total",total);
-                startActivity(intent);
+                if(editTotalSeat.getText().toString().equals("")||editTotalMan.getText().toString().equals(""))
+                {
+                    if(editTotalSeat.getText().toString().equals("")&&editTotalMan.getText().toString().equals(""))
+                        Toast.makeText(getApplicationContext(), "총 좌석수, 참여 인원수를 설정해주세요.", Toast.LENGTH_SHORT).show();
+                    else
+                    {
+                        if (editTotalSeat.getText().toString().equals(""))Toast.makeText(getApplicationContext(), "총 좌석수를 설정해주세요.", Toast.LENGTH_SHORT).show();
+                        else Toast.makeText(getApplicationContext(), "참여 인원수를 설정해주세요.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else
+                {
+                    editSeat = Integer.parseInt(editTotalSeat.getText().toString());
+                    editman = Integer.parseInt(editTotalMan.getText().toString());
+                    Intent intent = new Intent(getApplicationContext(), userActivity.class);
+                    Content total = new Content(editSeat, editman);
+                    intent.putExtra("total", total);
+                    startActivity(intent);
+                }
             }
         });
     }
