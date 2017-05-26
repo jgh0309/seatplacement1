@@ -1,7 +1,7 @@
 package com.iot.lee_pc.seatplacement;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 public class sub_activity extends AppCompatActivity
 {

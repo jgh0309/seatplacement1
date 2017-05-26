@@ -92,6 +92,7 @@ public class userActivity extends AppCompatActivity
                             getApplicationContext(),
                             resultActivity.class
                     );
+                    intent.putExtra("totalseat", totalseat);
                     startActivity(intent);
                 }
             }

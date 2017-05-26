@@ -1,12 +1,13 @@
 package com.iot.lee_pc.seatplacement;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
@@ -20,21 +21,28 @@ public class resultActivity extends AppCompatActivity {
     String name;
     String seat;
     int recordCount;
+    int totalseat;
+    private ArrayList<RecycleData> recycleDatas = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
+
+        Intent intent = getIntent();
+        totalseat = intent.getIntExtra("totalseat", 0);
+
         Setseatnumber();
 
         _recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         ArrayList<Info> infos = loadData();
+        InsertData(totalseat);
 
-        infoadapter infoadapter = new infoadapter(infos);
+        infoadapter infoadapter = new infoadapter(recycleDatas, infos);
         _recyclerView.setAdapter(infoadapter);
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        _recyclerView.setLayoutManager(layoutManager);
+        RecyclerView.LayoutManager gridlayoutManager = new GridLayoutManager(getApplicationContext(), 5);
+        _recyclerView.setLayoutManager(gridlayoutManager);
         _recyclerView.setItemAnimator(new DefaultItemAnimator());
 
     }
@@ -93,55 +101,47 @@ public class resultActivity extends AppCompatActivity {
                 c1.close();
             }
             if (preferences == 3) {
-                // randomSeat(recordCount);
-////////////////////////////////////////////////////
-
-                       String Record = "select _id from  StudentInformation where  SeatPlace = 100";//레코드 개수 찾기
-                      Cursor _count = db.rawQuery(Record, null);
-                     int nullseatCount = _count.getCount();  //빈자리 개수
-               int a[] = new int[nullseatCount]; //int형 배열 선언 빈자리의 a개수
-                //     _count.close();
+                int temp = 0;
+                int seatnumber;
+                int a[] = new int[recordCount]; //int형 배열 선언 빈자리의 a개수
                 int b[] = new int[recordCount];
-
-                Cursor saveCursor = db.rawQuery("select SeatPlace from StudentInformation ", null);
-                for(int i = 0 ; i < recordCount ; i ++ )
-                {
-                    saveCursor.moveToNext();
-                    b[i]=saveCursor.getInt(0);
-                }
-                for (int i = 0; i < nullseatCount; i++) {
+                for (int i = 0; i < recordCount; i++) {
                     a[i] = (int) (Math.random() * recordCount + 1);
-                    for (int j = 0; j < recordCount; j++) //중복제거를 위한 for문
+                    for (int j = 0; j < i; j++) //중복제거를 위한 for문
                     {
 
-                        if (a[i] == b[j]) {
+                        if (a[i] == a[j]) {
 
                             i--;
                             break;
                         }
                     }
                 }
-
-
+                Cursor saveCursor = db.rawQuery("select SeatPlace from StudentInformation ", null);
+                for(int i = 0 ; i < recordCount ; i ++ )
+                {
+                    saveCursor.moveToNext();
+                    b[i]=saveCursor.getInt(0);
+                }
                 for (int i = 0; i < recordCount; i++) { //랜덤
-//i가 되는 자리가 비었을때 100 , 일 대 랜덤의 배열을 하나씩 검사하며 같은 것이 없으면 넣는다
-                    for (int j = 0; j < nullseatCount; j++) { //사용자
 
-                        if (100 == b[i]) { //자리가 비어있으면
-                            db.execSQL("update StudentInformation set SeatPlace = " + a[j] + " where _id=" + (i+1));
+                    for (int j = 0; j < recordCount; j++) { //사용자
+                        if (a[i] == b[j]) { //랜덤값과 자리값이 같으면 멈추고 다음 랜덤자리 시작
+                            break;
                         }
-                        else
+                        if (100 == b[j]) { //자리가 비어있으면 저장 을하고
+                            temp = j + 1; //비어있는 자리의 위치
+
+                        }
+                        if (j == recordCount - 1) // 랜덤 자리 시작이 되지않고 넘어오면 마지막에 업데이트
                         {
+                            db.execSQL("update StudentInformation set SeatPlace " + "= " + a[i] + " where _id=" + temp);
                             break;
                         }
 
-
                     }
                 }
-
-
             }
-
         }
     }
 
@@ -186,11 +186,15 @@ public class resultActivity extends AppCompatActivity {
         return infos;
     }
 
+    public void InsertData(int i) {    // 앨범객체 생성해서 arraylist에 넣어줌.
+        for (int j = 0; j < i; j++) {
 
-
-
-
+            RecycleData recycleData = new RecycleData();
+            recycleData.setSeatnumber(j);
+            recycleDatas.add(recycleData);
+        }
     }
+}
 
 
 
