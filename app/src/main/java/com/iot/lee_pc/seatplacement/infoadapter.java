@@ -10,11 +10,11 @@ import java.util.ArrayList;
 
 public class infoadapter extends RecyclerView.Adapter<infoadapter.ViewHolder>
 {
-    private ArrayList<Info> _albums;
+    private ArrayList<Info> _infos;
 
-    public infoadapter(ArrayList<Info> albums)
+    public infoadapter(ArrayList<Info> infos)
     {
-        _albums = albums;
+        _infos = infos;
     }
 
     @Override
@@ -28,7 +28,7 @@ public class infoadapter extends RecyclerView.Adapter<infoadapter.ViewHolder>
     @Override
     public void onBindViewHolder(ViewHolder holder, int position)
     {
-        Info info = _albums.get(position);
+        Info info = _infos.get(position);
         holder.nameText.setText(info.getName());
         holder.seatText.setText(info.getSeat());
     }
@@ -36,7 +36,7 @@ public class infoadapter extends RecyclerView.Adapter<infoadapter.ViewHolder>
     @Override
     public int getItemCount()
     {
-        return _albums.size();
+        return _infos.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder
