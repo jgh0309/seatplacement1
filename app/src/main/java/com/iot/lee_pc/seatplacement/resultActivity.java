@@ -37,6 +37,9 @@ public class resultActivity extends AppCompatActivity {
         _recyclerView.setLayoutManager(layoutManager);
         _recyclerView.setItemAnimator(new DefaultItemAnimator());
 
+
+
+
     }
 
     public void Setseatnumber() {
@@ -95,8 +98,8 @@ public class resultActivity extends AppCompatActivity {
             if (preferences == 3) {
                 // randomSeat(recordCount);
 ////////////////////////////////////////////////////
-
-                       String Record = "select _id from  StudentInformation where  SeatPlace = 100";//레코드 개수 찾기
+    randomseatSelect(recordCount);
+/*                       String Record = "select _id from  StudentInformation where  SeatPlace = 100";//레코드 개수 찾기
                       Cursor _count = db.rawQuery(Record, null);
                      int nullseatCount = _count.getCount();  //빈자리 개수
                int a[] = new int[nullseatCount]; //int형 배열 선언 빈자리의 a개수
@@ -140,7 +143,51 @@ public class resultActivity extends AppCompatActivity {
                 }
 
 
+            }         String Record = "select _id from  StudentInformation where  SeatPlace = 100";//레코드 개수 찾기
+            Cursor _count = db.rawQuery(Record, null);
+            int nullseatCount = _count.getCount();  //빈자리 개수
+            int a[] = new int[nullseatCount]; //int형 배열 선언 빈자리의 a개수
+            //     _count.close();
+            int b[] = new int[recordCount];
+
+            Cursor saveCursor = db.rawQuery("select SeatPlace from StudentInformation ", null);
+            for(int i = 0 ; i < recordCount ; i ++ )
+            {
+                saveCursor.moveToNext();
+                b[i]=saveCursor.getInt(0);
             }
+            for (int i = 0; i < nullseatCount; i++) {
+                a[i] = (int) (Math.random() * recordCount + 1);
+                for (int j = 0; j < recordCount; j++) //중복제거를 위한 for문
+                {
+
+                    if (a[i] == b[j]) {
+
+                        i--;
+                        break;
+                    }
+                }
+            }
+
+
+            for (int i = 0; i < recordCount; i++) { //랜덤
+//i가 되는 자리가 비었을때 100 , 일 대 랜덤의 배열을 하나씩 검사하며 같은 것이 없으면 넣는다
+                for (int j = 0; j < nullseatCount; j++) { //사용자
+
+                    if (100 == b[i]) { //자리가 비어있으면
+                        db.execSQL("update StudentInformation set SeatPlace = " + a[j] + " where _id=" + (i+1));
+                    }
+                    else
+                    {
+                        break;
+                    }
+
+
+                }
+            }
+
+
+       */ }
 
         }
     }
@@ -184,6 +231,59 @@ public class resultActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "조회에러", Toast.LENGTH_SHORT).show();
         }
         return infos;
+    }
+
+
+    private void randomseatSelect (int recordCount)
+    {
+
+
+        String Record = "select _id from  StudentInformation where  SeatPlace = 100";//레코드 개수 찾기
+        Cursor saveCursor = db.rawQuery("select SeatPlace from StudentInformation ", null);
+
+        Cursor _count = db.rawQuery(Record, null);
+        int nullseatCount = _count.getCount();  //빈자리 개수
+        int a[] = new int[nullseatCount]; //int형 배열 선언 빈자리의 a개수
+        int b[] = new int[recordCount];
+
+      for(int i = 0 ; i < recordCount ; i ++ )
+        {
+            saveCursor.moveToNext();
+            b[i]=saveCursor.getInt(0);
+        }
+        for (int i = 0; i < nullseatCount; i++) {
+            a[i] = (int) (Math.random() * recordCount + 1);
+            for (int j = 0; j < recordCount; j++) //중복제거를 위한 for문
+            {
+
+                if (a[i] == b[j]) {
+
+                    i--;
+                    break;
+                }
+            }
+        }
+
+
+        for (int i = 0; i < recordCount; i++) { //랜덤
+//i가 되는 자리가 비었을때 100 , 일 대 랜덤의 배열을 하나씩 검사하며 같은 것이 없으면 넣는다
+            for (int j = 0; j < nullseatCount; j++) { //사용자
+
+                if (100 == b[i]) { //자리가 비어있으면
+                    db.execSQL("update StudentInformation set SeatPlace = " + a[j] + " where _id=" + (i+1));
+                    break;
+                }
+                else
+                {
+                    break;
+                }
+
+
+            }
+        }
+
+
+
     }
 
 
