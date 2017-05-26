@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">    <TextView
+    android:orientation="vertical">
+
+    <TextView
         android:id="@+id/nameview"
         android:layout_width="304dp"
         android:layout_height="wrap_content"
@@ -21,10 +23,17 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:hint="seat"
+        android:hint="price"
         android:textColor="@color/colorAccent"
         android:textSize="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameview"/>
+
+    <TextView
+        android:id="@+id/seatView"
+        android:layout_width="304dp"
+        android:layout_height="wrap_content"
+        android:hint="seat"
+        android:textSize="20dp"/>
 
 </LinearLayout>

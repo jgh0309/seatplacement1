@@ -13,17 +13,17 @@ import java.util.ArrayList;
  */
 
 public class Tenderadapter extends RecyclerView.Adapter<Tenderadapter.ViewHolder> {
-    private ArrayList<Info> _albums;
+    private ArrayList<Tender> _tenders;
 
-    public Tenderadapter(ArrayList<Info> albums)
+    public Tenderadapter(ArrayList<Tender> tenderArrayList, ArrayList<Tender> tenders)
     {
-        _albums = albums;
+        this._tenders = tenders;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.itemview, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.priceview, parent, false);
 
         return new ViewHolder(view);
     }
@@ -31,15 +31,16 @@ public class Tenderadapter extends RecyclerView.Adapter<Tenderadapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position)
     {
-        Info info = _albums.get(position);
-        holder.nameText.setText(info.getName());
-        holder.priceText.setText(info.getSeat());
+        Tender tender = _tenders.get(position);
+        holder.nameText.setText(tender.getName());
+        holder.priceText.setText(tender.getPrice());
+        holder.seatText.setText(tender.getTenderseat());
     }
 
     @Override
     public int getItemCount()
     {
-        return _albums.size();
+        return _tenders.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder
@@ -50,9 +51,11 @@ public class Tenderadapter extends RecyclerView.Adapter<Tenderadapter.ViewHolder
 
             nameText = (TextView) priceview.findViewById(R.id.nameview);
             priceText = (TextView) priceview.findViewById(R.id.priceview);
+            seatText = (TextView) priceview.findViewById(R.id.seatView);
         }
 
         TextView nameText;
         TextView priceText;
+        TextView seatText;
     }
 }

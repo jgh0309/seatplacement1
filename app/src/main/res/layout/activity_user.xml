@@ -158,14 +158,4 @@
         app:layout_constraintTop_toTopOf="@+id/guideline2"
         android:layout_marginLeft="0dp"/>
 
-    <Button
-        android:id="@+id/buttonDrawing"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:text="자리배치도"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
-
 </android.support.constraint.ConstraintLayout>

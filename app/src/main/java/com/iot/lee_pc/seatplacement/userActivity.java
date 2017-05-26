@@ -98,20 +98,6 @@ public class userActivity extends AppCompatActivity
             }
         });
 
-        Button button2 = (Button) findViewById(R.id.buttonDrawing);
-        button2.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-
-                Intent intent = new Intent(
-                        getApplicationContext(),
-                        drawingRect.class
-                );
-                startActivity(intent);
-            }
-        });
     }
 
     public void insertStudentInfo(String editName, String edit1st_preference, String edit2nd_preference, String edit3rd_preference,
@@ -124,30 +110,7 @@ public class userActivity extends AppCompatActivity
                     "insert into StudentInformation" +
                             " (name, preference1, preference2, preference3, batting1, batting2, batting3, SeatPlace)" +
                             " values ( '" + editName + "', " + edit1st_preference + ", " + edit2nd_preference + ", " + edit3rd_preference +
-                            ", " + edit1st_batting + ", " + edit2nd_batting + ", " + edit3rd_batting + ", 100 );"
-                    /*"insert into StudentInformation" +
-                            " (name, preference1, preference2, preference3, batting1, batting2, batting3, SeatPlace)" +
-                            " values ( 'PARK', 3, 1, 2, 4500, 2000, 3000, 100 );");
-            db.execSQL(
-                    "insert into StudentInformation" +
-                            " (name, preference1, preference2, preference3, batting1, batting2, batting3, SeatPlace)" +
-                            " values ( 'TAE', 4, 3, 1, 4400, 2100, 3200, 100 );");
-            db.execSQL(
-                    "insert into StudentInformation" +
-                            " (name, preference1, preference2, preference3, batting1, batting2, batting3, SeatPlace)" +
-                            " values ( 'HUNG', 6, 3, 2, 4200, 1000, 2000, 100 );");
-            db.execSQL(
-                    "insert into StudentInformation" +
-                            " (name, preference1, preference2, preference3, batting1, batting2, batting3, SeatPlace)" +
-                            " values ( 'KIM', 1, 5, 2, 3800, 2000, 3000, 100 );");
-            db.execSQL(
-                    "insert into StudentInformation" +
-                            " (name, preference1, preference2, preference3, batting1, batting2, batting3, SeatPlace)" +
-                            " values ( 'JUNG', 5, 4, 2, 3500, 2000, 3000, 100 );");
-            db.execSQL(
-                    "insert into StudentInformation" +
-                            " (name, preference1, preference2, preference3, batting1, batting2, batting3, SeatPlace)" +
-                            " values ( 'LEE', 1, 6, 2, 3500, 2000, 3000, 100 );"*/);
+                            ", " + edit1st_batting + ", " + edit2nd_batting + ", " + edit3rd_batting + ", 100 );");
         } catch (Exception e)
         {
             e.printStackTrace();

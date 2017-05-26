@@ -17,13 +17,16 @@ import static java.lang.Integer.parseInt;
 
 public class resultActivity extends AppCompatActivity {
     private RecyclerView _recyclerView;
+    private RecyclerView detailView;
     SQLiteDatabase db;
     String name;
     String seat;
+    String price;
+    String tenderseat;
     int recordCount;
-    private ArrayList<RecycleData> recycleDatas = new ArrayList<>();
-
     int totalseat;
+    private ArrayList<RecycleData> recycleDatas = new ArrayList<>();
+    private ArrayList<Tender> _tenders = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,15 +39,26 @@ public class resultActivity extends AppCompatActivity {
         Setseatnumber();
 
         _recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        detailView = (RecyclerView) findViewById(R.id.detailview);
+
         ArrayList<Info> infos = loadData();
+        ArrayList<Tender> tenders = loadDetail();
         InsertData(totalseat);
 
+
+
         infoadapter infoadapter = new infoadapter(recycleDatas, infos);
+        Tenderadapter tenderadapter = new Tenderadapter(_tenders, tenders);
         _recyclerView.setAdapter(infoadapter);
+        detailView.setAdapter(tenderadapter);
 
         RecyclerView.LayoutManager gridlayoutManager = new GridLayoutManager(getApplicationContext(), 5);
         _recyclerView.setLayoutManager(gridlayoutManager);
         _recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        RecyclerView.LayoutManager gridlayoutManager1 = new GridLayoutManager(getApplicationContext(),recordCount);
+        detailView.setLayoutManager(gridlayoutManager1);
+        detailView.setItemAnimator(new DefaultItemAnimator());
 
     }
 
@@ -77,10 +91,8 @@ public class resultActivity extends AppCompatActivity {
                             String stu2 = " select _id ,  preference" + preferences + ", batting" + preferences + ", SeatPlace from StudentInformation where _id=" + j;
                             Cursor c2 = db.rawQuery(stu2, null);
                             c2.moveToNext();
-                            String stu_no_compare = c2.getString(0);
                             String stu_seat_compare = c2.getString(1);
                             String stu_money_compare = c2.getString(2);
-
 
                             if (stu_seat.equals(stu_seat_compare)) { //선택한 자리가 같을 시
                                 int _seat_money = parseInt(stu_money); //비교 하는 사람의 입찰금을 저장
@@ -118,7 +130,7 @@ public class resultActivity extends AppCompatActivity {
                     b[i]=saveCursor.getInt(0);
                 }
                 for (int i = 0; i < nullseatCount; i++) {
-                    a[i] = (int) (Math.random() * recordCount + 1);
+                    a[i] = (int) (Math.random() * totalseat + 1);
                     for (int j = 0; j < recordCount; j++) //중복제거를 위한 for문
                     {
 
@@ -145,12 +157,12 @@ public class resultActivity extends AppCompatActivity {
                             break;
                         }
 
-
                     }
                 }
             }
         }
     }
+
     private void isSeatempty(String stu_seat, String stu_no) {
         Cursor cursor = db.rawQuery(" select count(*) as elreadySeat from StudentInformation where SeatPlace = " + stu_seat, null);
         cursor.moveToNext();
@@ -169,6 +181,41 @@ public class resultActivity extends AppCompatActivity {
         } catch (Exception e) { //오류검출
             e.printStackTrace();
         }
+    }
+
+    private ArrayList<Tender> loadDetail(){
+        ArrayList<Tender> tenders = new ArrayList<>();
+        for (int i = 0; i < 3; i++) //우선순위 개수 만큼 반복
+        {
+            for (int j = 0; j < recordCount; j++) { //사람 수 만큼 반복
+                // 우선순위를 비교할 때 같은 사람이 있으면 금액과 자리를 출력
+                //String stu1 = " select _name , batting"+i+" from StudentInformation where preference"+i+"= "+(j+1); //동일한 좌석을 가진 학생 수 출력을 위한 SQL문
+                String stu1 = " select _id from StudentInformation where preference" + (i+1) + "= " + (j + 1); //동일한 좌석을 가진 학생 수 출력을 위한 SQL문
+                Cursor c1 = db.rawQuery(stu1, null);
+                int preferenceCount = c1.getCount();
+                c1.close();
+
+                String equlPreference = " select name , batting" + (i+1) + ", SeatPlace from StudentInformation where preference" + (i+1) + "= " + (j + 1) +
+                        " order by SeatPlace;"; //동일한 좌석을 가진 학생 수 출력을 위한 SQL문 ,
+                //j+1 의 좌석의 사람 이름과 배팅금액을 불러옴
+                Cursor cursor = db.rawQuery(equlPreference, null);
+
+                for (int k = 0; k < preferenceCount; k++) //동일 좌석을 지원한 수 만큼 반복
+                {
+                    cursor.moveToNext();
+                    name = cursor.getString(0);
+                    price = cursor.getString(1);
+                    tenderseat = cursor.getString(2);
+                    Tender tender = new Tender();
+                    tender.setName(name);
+                    tender.setPrice(price);
+                    tender.setTenderseat(tenderseat);
+                    tenders.add(tender);
+                }
+                cursor.close();
+            }
+        }
+        return tenders;
     }
 
     private ArrayList<Info> loadData() {
@@ -200,10 +247,7 @@ public class resultActivity extends AppCompatActivity {
             recycleDatas.add(recycleData);
         }
     }
-
-
-
-    }
+}
 
 
 
