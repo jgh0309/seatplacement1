@@ -65,7 +65,7 @@ public class userActivity extends AppCompatActivity
                         edit2nd_batting.setText("");
                         edit3rd_batting.setText("");
                         totalcount++;
-                        textView.setText("총 " + (totalseat-totalcount) + " 개의 좌석이 있습니다.");
+                        textView.setText("총 " + totalseat + " 개의 좌석이 있습니다.");
                     } else
                         Toast.makeText(getApplicationContext(), "최대 좌석수 이하로 선택하세요.", Toast.LENGTH_SHORT).show();
 
@@ -92,6 +92,7 @@ public class userActivity extends AppCompatActivity
                             getApplicationContext(),
                             resultActivity.class
                     );
+                    intent.putExtra("totalseat", totalseat);
                     startActivity(intent);
                 }
             }
@@ -147,11 +148,9 @@ public class userActivity extends AppCompatActivity
                     "insert into StudentInformation" +
                             " (name, preference1, preference2, preference3, batting1, batting2, batting3, SeatPlace)" +
                             " values ( 'LEE', 1, 6, 2, 3500, 2000, 3000, 100 );"*/);
-            Toast.makeText(getApplicationContext(), "삽입성공", Toast.LENGTH_SHORT).show();
         } catch (Exception e)
         {
             e.printStackTrace();
-            Toast.makeText(getApplicationContext(), "삽입실패", Toast.LENGTH_SHORT).show();
         }
     }
 

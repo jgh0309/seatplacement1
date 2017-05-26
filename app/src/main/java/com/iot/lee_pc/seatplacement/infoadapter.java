@@ -1,20 +1,25 @@
 package com.iot.lee_pc.seatplacement;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
 
 import java.util.ArrayList;
 
 public class infoadapter extends RecyclerView.Adapter<infoadapter.ViewHolder>
 {
-    private ArrayList<Info> _albums;
+    private ArrayList<RecycleData> totalseats;
+    private ArrayList<Info> infos;
+    int manCount;
 
-    public infoadapter(ArrayList<Info> albums)
+    public infoadapter(ArrayList<RecycleData> totalseats, ArrayList<Info> infos)
     {
-        _albums = albums;
+        this.totalseats = totalseats;
+        this.infos = infos;
+        manCount = infos.size();
     }
 
     @Override
@@ -28,15 +33,22 @@ public class infoadapter extends RecyclerView.Adapter<infoadapter.ViewHolder>
     @Override
     public void onBindViewHolder(ViewHolder holder, int position)
     {
-        Info info = _albums.get(position);
-        holder.nameText.setText(info.getName());
-        holder.seatText.setText(info.getSeat());
+        RecycleData seat = totalseats.get(position);
+        int seatnumber = seat.getSeatnumber();
+        for(int i=0; i<manCount;i++) {
+            if(seatnumber == Integer.parseInt(infos.get(i).getSeat())) {
+                holder.button.setBackgroundColor(Color.BLUE);
+                holder.button.setText(infos.get(i).getName());
+                System.out.println(infos.get(i).getName());
+            }
+        }
+
     }
 
     @Override
     public int getItemCount()
     {
-        return _albums.size();
+        return totalseats.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder
@@ -45,11 +57,12 @@ public class infoadapter extends RecyclerView.Adapter<infoadapter.ViewHolder>
         {
             super(itemView);
 
-            nameText = (TextView) itemView.findViewById(R.id.nameview);
-            seatText = (TextView) itemView.findViewById(R.id.seatview);
+            button = (Button) itemView.findViewById(R.id.button);
+
+//            nameText = (TextView) itemView.findViewById(R.id.nameview);
+//            seatText = (TextView) itemView.findViewById(R.id.seatview);
         }
 
-        TextView nameText;
-        TextView seatText;
+        Button button;
     }
 }
